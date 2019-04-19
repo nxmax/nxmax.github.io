@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Index :: Nxmax&#39;s Blog</title>
+    <title>Android AOA :: Nxmax&#39;s Blog</title>
 
     
     <link href="/css/nucleus.css?1555663837" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="./">
+  <body class="" data-url="java/android-aoa/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -94,7 +94,7 @@
   
     
     <li data-nav-id="java/" title="Javas" class="dd-item 
-        
+        parent
         
         
         ">
@@ -139,7 +139,7 @@
  
   
     
-      <li data-nav-id="java/android-aoa/" title="Android AOA" class="dd-item ">
+      <li data-nav-id="java/android-aoa/" title="Android AOA" class="dd-item active">
         <a href="java/android-aoa/">
         Android AOA
         <i class="fas fa-check read-icon"></i>
@@ -256,29 +256,107 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='./'>Index</a> > <a href='java/'>Javas</a> > Android AOA
+          
+         
+          
+         
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#如何在android中使用aoa">如何在android中使用AOA</a>
+<ul>
+<li><a href="#注意事项">注意事项</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Android AOA
+            </h1>
+          
 
         
 
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<p>工作内容记录的地方。</p>
 
-<ul>
-<li>Java开发的资料在<a href="java/">这里</a></li>
-<li>C或常用库的开发资料在<a href="development/">这里</a></li>
-</ul>
+
+<p>AOA的规范目的是能够将安卓设备作为device连接到host中，而且数据由安卓应用处理。在安卓手机连接到usb的host控制器后，默认是不启用AOA功能的，需要在主机中对USB设备发送3个命令（Google的私有指令）：</p>
+
+<ol>
+<li>获取版本号：ACCESSORY_GET_PROTOCOL          51</li>
+<li>设置字符串：ACCESSORY_SEND_STRING          52（manufacturer/model/description/version/uri/serial）</li>
+<li>启用Accessory模式：ACCESSORY_START                 53</li>
+</ol>
+
+<p>在完成AOA功能之后，Device的VID应该变成了0x18D1，PID为0x2D00或0x2D01，这个时候安卓系统就会根据主机发送的字符串信息，查找手机上匹配这些字符串（字符串的作用是做特征匹配）的应用，每个应用里面定义能够匹配哪些特征。</p>
+
+<p>交互流程如下：
+<img src="/images/2019-02-18_14-56-55-AOA-process.png" alt="2019-02-18_14-56-55-AOA-process.png" />
+在windows中可以开发应用程序完成UsbHost的逻辑以激活手机的AOA应用。windows的普通应用程序为了能直接访问USB，需要借助libusb库，同时需要在windows中使用libusb支持的驱动替换默认的安卓驱动。</p>
+
+<h1 id="如何在android中使用aoa">如何在android中使用AOA</h1>
+
+<p>有两种使用AOA的方式，第一种是用户插入USB设备的时候，另外一种是应用启动是通过UsbManager查找。第一种方式中应用自动拥有访问此设备的权限，同时在intent中包含Accessory的信息。第二种方式则需要判断是否有USB设备，同时需要主动请求用户赋予权限。</p>
+
+<h2 id="注意事项">注意事项</h2>
+
+<p>不管是哪种方式，如果应用没有重新create，intent中包含的信息不会变化，因此应用要小心处理一个activity是用户插入设备而启动的还是通过UsbManager查找的。同时要注意的是在一个activity中USB设备不能被关闭，一旦关闭则不能再使用。</p>
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
+
         
         </div> 
         
@@ -294,7 +372,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -310,8 +387,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -325,6 +400,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -342,6 +420,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -360,6 +439,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -397,8 +479,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="java/android-gradle-dependency/" title="gradle的dependencies说明"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="java/" title="Javas" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="development/" title="Developments" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

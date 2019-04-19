@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Index :: Nxmax&#39;s Blog</title>
+    <title>Compile Sqlcipher on Windows :: Nxmax&#39;s Blog</title>
 
     
     <link href="/css/nucleus.css?1555663837" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="./">
+  <body class="" data-url="development/compile-sqlcipher-on-windows/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -166,7 +166,7 @@
   
     
     <li data-nav-id="development/" title="Developments" class="dd-item 
-        
+        parent
         
         
         ">
@@ -192,7 +192,7 @@
  
   
     
-      <li data-nav-id="development/compile-sqlcipher-on-windows/" title="Compile Sqlcipher on Windows" class="dd-item ">
+      <li data-nav-id="development/compile-sqlcipher-on-windows/" title="Compile Sqlcipher on Windows" class="dd-item active">
         <a href="development/compile-sqlcipher-on-windows/">
         Compile Sqlcipher on Windows
         <i class="fas fa-check read-icon"></i>
@@ -256,29 +256,148 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='./'>Index</a> > <a href='development/'>Developments</a> > Compile Sqlcipher on Windows
+          
+         
+          
+         
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#sqlite3的编译">SQLite3的编译</a>
+<ul>
+<li><a href="#amalgamation编译方式">amalgamation编译方式</a></li>
+<li><a href="#raw格式的代码编译">RAW格式的代码编译</a></li>
+</ul></li>
+<li><a href="#sqlcipher在windows下的编译">SqlCipher在windows下的编译</a></li>
+<li><a href="#注意事项">注意事项</a></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Compile Sqlcipher on Windows
+            </h1>
+          
 
         
 
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<p>工作内容记录的地方。</p>
 
-<ul>
-<li>Java开发的资料在<a href="java/">这里</a></li>
-<li>C或常用库的开发资料在<a href="development/">这里</a></li>
-</ul>
+
+<p>SQLite3是一个广泛使用的数据库，从linux，windows到安卓都有SQLite的应用。本文介绍SQLite3及SqlCipher在windows上的编译。</p>
+
+<h1 id="sqlite3的编译">SQLite3的编译</h1>
+
+<p>SQLite3提供了多种源代码的下载，下面以合并后的代码（amalgamation）和原始代码（RAW）为例说明编译过程。编译过程参考<a href="https://www.sqlite.org/howtocompile.html">https://www.sqlite.org/howtocompile.html</a></p>
+
+<h2 id="amalgamation编译方式">amalgamation编译方式</h2>
+
+<p>下载（<a href="https://www.sqlite.org/download.html">地址</a>）<a href="https://www.sqlite.org/2018/sqlite-amalgamation-3240000.zip">sqlite-amalgamation-3240000.zip</a>后解压，启动visual studio的命令行工具，输入命令</p>
+
+<pre><code class="language-bash">cl sqlite3.c -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
+</code></pre>
+
+<p>注意：SQLite3的编译文档中命令</p>
+
+<pre><code class="language-bash">cl sqlite3.c -link -dll -out:sqlite3.dll
+</code></pre>
+
+<p>生成的DLL是不会把SQLite3的方法导出的。</p>
+
+<h2 id="raw格式的代码编译">RAW格式的代码编译</h2>
+
+<p>下载<a href="https://www.sqlite.org/2018/sqlite-src-3240000.zip">sqlite-src-3240000.zip</a>并解压，在编译之前需要安装tcl，可以到<a href="https://www.activestate.com/activetcl/downloadshttps://www.activestate.com/activetcl/downloads">https://www.activestate.com/activetcl/downloads</a>下载，安装后时需要将tcl添加到PATH变量中，重启生效。</p>
+
+<p>启动visual studio的命令行工具，输入生成合并代码的命令：</p>
+
+<pre><code class="language-bash">nmake /f Makefile.msc sqlite3.c
+</code></pre>
+
+<p>运行后会产生sqlite3.c文件，这就是合并后的代码，可以参照上一节的编译方式进行编译。</p>
+
+<h1 id="sqlcipher在windows下的编译">SqlCipher在windows下的编译</h1>
+
+<p>sqlcipher的源代码在<a href="https://github.com/sqlcipher/sqlcipher">https://github.com/sqlcipher/sqlcipher</a>。官方编译的sqlcipher lib是需要购买服务的。sqlcipher需要openssl库，根据windows平台下载32/64的openssl开发包。<a href="https://wiki.openssl.org/index.php/Binaries">https://wiki.openssl.org/index.php/Binaries</a> ，推荐到<a href="https://slproweb.com/products/Win32OpenSSL.html">https://slproweb.com/products/Win32OpenSSL.html</a>下载。 openssl以win32的版本为例，安装Win32OpenSSL-1_0_2o.exe</p>
+
+<p>sqlcipher编译过程与sqlite raw源代码编译的方式类似，但需要额外的处理部分文件。</p>
+
+<p>与raw源代码类似，需要先安装tcl。
+clone源代码，checkout具体的版本，如：</p>
+
+<pre><code class="language-bash">git clone https://github.com/sqlcipher/sqlcipher.git
+git checkout -b v3.4.2 v3.4.2
+</code></pre>
+
+<p>使用VC的命令行，生成sqlite3.c文件</p>
+
+<pre><code class="language-bash">nmake /f Makefile.msc sqlite3.c
+</code></pre>
+
+<p>使用VC的命令行，使用cl编译成dll库（请替换openssl的路径）</p>
+
+<pre><code class="language-bash">cl -IC:\Usr\OpenSSL-Win32\include sqlite3.c -DSQLITE_API=__declspec(dllexport) -DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC /MT -link -dll -out:sqlcipher.dll -LIBPATH:C:\Usr\OpenSSL-Win32\lib libeay32.lib ssleay32.lib advapi32.lib user32.lib gdi32.lib
+</code></pre>
+
+<p>除此之外可以参考<a href="https://github.com/sqlitebrowser/sqlitebrowser/wiki/Win64-setup-—-Compiling-SQLCipher">https://github.com/sqlitebrowser/sqlitebrowser/wiki/Win64-setup-%E2%80%94-Compiling-SQLCipher</a>的文档进行编译。</p>
+
+<h1 id="注意事项">注意事项</h1>
+
+<p>sqlcipher依赖于openssl，对于动态链接（依赖于openssl的dll文件）方式，编译sqlcipher的visual studio版本不要求和编译openssl时使用的版本一样，但是对于静态链接openssl的方式，要求使用相同版本的编译器。</p>
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
+
         
         </div> 
         
@@ -294,7 +413,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -309,9 +427,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -361,6 +476,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -373,6 +489,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -397,8 +514,8 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="development/" title="Developments"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="java/" title="Javas" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

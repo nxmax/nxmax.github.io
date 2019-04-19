@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Developments on Nxmax&#39;s Blog</title>
+    <link>./development/</link>
+    <description>Recent content in Developments on Nxmax&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Apr 2019 13:42:04 +0800</lastBuildDate>
+    
+	<atom:link href="./development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Compile Sqlcipher on Windows</title>
+      <link>./development/compile-sqlcipher-on-windows/</link>
+      <pubDate>Fri, 19 Apr 2019 13:42:04 +0800</pubDate>
+      
+      <guid>./development/compile-sqlcipher-on-windows/</guid>
+      <description>SQLite3是一个广泛使用的数据库，从linux，windows到安卓都有SQLite的应用。本文介绍SQLite3及SqlCipher在windows上的编译。
+SQLite3的编译 SQLite3提供了多种源代码的下载，下面以合并后的代码（amalgamation）和原始代码（RAW）为例说明编译过程。编译过程参考https://www.sqlite.org/howtocompile.html
+amalgamation编译方式 下载（地址）sqlite-amalgamation-3240000.zip后解压，启动visual studio的命令行工具，输入命令
+cl sqlite3.c -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll  注意：SQLite3的编译文档中命令
+cl sqlite3.c -link -dll -out:sqlite3.dll  生成的DLL是不会把SQLite3的方法导出的。
+RAW格式的代码编译 下载sqlite-src-3240000.zip并解压，在编译之前需要安装tcl，可以到https://www.activestate.com/activetcl/downloads下载，安装后时需要将tcl添加到PATH变量中，重启生效。
+启动visual studio的命令行工具，输入生成合并代码的命令：
+nmake /f Makefile.msc sqlite3.c  运行后会产生sqlite3.c文件，这就是合并后的代码，可以参照上一节的编译方式进行编译。
+SqlCipher在windows下的编译 sqlcipher的源代码在https://github.com/sqlcipher/sqlcipher。官方编译的sqlcipher lib是需要购买服务的。sqlcipher需要openssl库，根据windows平台下载32/64的openssl开发包。https://wiki.openssl.org/index.php/Binaries ，推荐到https://slproweb.com/products/Win32OpenSSL.html下载。 openssl以win32的版本为例，安装Win32OpenSSL-1_0_2o.exe
+sqlcipher编译过程与sqlite raw源代码编译的方式类似，但需要额外的处理部分文件。
+与raw源代码类似，需要先安装tcl。 clone源代码，checkout具体的版本，如：
+git clone https://github.com/sqlcipher/sqlcipher.git git checkout -b v3.4.2 v3.4.2  使用VC的命令行，生成sqlite3.c文件
+nmake /f Makefile.msc sqlite3.c  使用VC的命令行，使用cl编译成dll库（请替换openssl的路径）
+cl -IC:\Usr\OpenSSL-Win32\include sqlite3.c -DSQLITE_API=__declspec(dllexport) -DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC /MT -link -dll -out:sqlcipher.dll -LIBPATH:C:\Usr\OpenSSL-Win32\lib libeay32.lib ssleay32.lib advapi32.</description>
+    </item>
+    
+  </channel>
+</rss>

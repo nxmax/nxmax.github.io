@@ -1,2 +1,0 @@
-# nxmax.github.io
-MyPage
