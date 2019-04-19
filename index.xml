@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Index on Nxmax&#39;s Blog</title>
-    <link>./</link>
+    <link>/</link>
     <description>Recent content in Index on Nxmax&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 03 Mar 2019 11:07:15 +0800</lastBuildDate>
     
-	<atom:link href="./index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>gradle的dependencies说明</title>
-      <link>./java/android-gradle-dependency/</link>
+      <link>/java/android-gradle-dependency/</link>
       <pubDate>Fri, 19 Apr 2019 14:30:50 +0800</pubDate>
       
-      <guid>./java/android-gradle-dependency/</guid>
+      <guid>/java/android-gradle-dependency/</guid>
       <description>一个android项目中引用的其他项目或依赖库使用的目是不一样的。下面是详细的说明
    新配置 废弃的配置 行为     implementation compile 添加到编译路径中，同时包含在输出（如APK），但是在作为模块被其他项目引用是，此依赖只会在运行时环境中依赖，编译时不需要。这样定义的目的是显著优化编译速度。比如模块B依赖模块A，模块C、D、E依赖模块B，如果模块B中使用implementation的方式依赖A时，如果A做了修改，那么只会重新编译B，而C、D、E模块都不需要重新编译。大多数的应用和测试模块均应使用此配置。   api compile 此依赖和 implementation 类似，但间接依赖此模块的模块需要重新编译，如implementation例子中的C、D、E模块都需要重新编译。   compileOnly provided 在编译路径中，但不在输出中。因此有这样依赖的模块应该动态的检查依赖的模块是否存在。这样的依赖可以减少最终APK的大小。此依赖不会向下延伸。   runtimeOnly apk 不在编译路径中，但包含在输出中。   annotationProcessor compile 注解处理器，有些第三方工具可以处理模块中的注解，通过此配置单独制定可以减少扫描处理器的包数量。    以上的说明是针对正常模块中的，针对测试（test）和安卓测试（androidTest）也有相同的依赖要求，只需要在配置名称的前面加上对应的前缀，并将首字母大写即可。</description>
     </item>
     
     <item>
       <title>Android AOA</title>
-      <link>./java/android-aoa/</link>
+      <link>/java/android-aoa/</link>
       <pubDate>Fri, 19 Apr 2019 15:24:23 +0800</pubDate>
       
-      <guid>./java/android-aoa/</guid>
+      <guid>/java/android-aoa/</guid>
       <description>AOA的规范目的是能够将安卓设备作为device连接到host中，而且数据由安卓应用处理。在安卓手机连接到usb的host控制器后，默认是不启用AOA功能的，需要在主机中对USB设备发送3个命令（Google的私有指令）：
  获取版本号：ACCESSORY_GET_PROTOCOL 51 设置字符串：ACCESSORY_SEND_STRING 52（manufacturer/model/description/version/uri/serial） 启用Accessory模式：ACCESSORY_START 53  在完成AOA功能之后，Device的VID应该变成了0x18D1，PID为0x2D00或0x2D01，这个时候安卓系统就会根据主机发送的字符串信息，查找手机上匹配这些字符串（字符串的作用是做特征匹配）的应用，每个应用里面定义能够匹配哪些特征。
 交互流程如下： 在windows中可以开发应用程序完成UsbHost的逻辑以激活手机的AOA应用。windows的普通应用程序为了能直接访问USB，需要借助libusb库，同时需要在windows中使用libusb支持的驱动替换默认的安卓驱动。
@@ -36,10 +36,10 @@
     
     <item>
       <title>Compile Sqlcipher on Windows</title>
-      <link>./development/compile-sqlcipher-on-windows/</link>
+      <link>/development/compile-sqlcipher-on-windows/</link>
       <pubDate>Fri, 19 Apr 2019 13:42:04 +0800</pubDate>
       
-      <guid>./development/compile-sqlcipher-on-windows/</guid>
+      <guid>/development/compile-sqlcipher-on-windows/</guid>
       <description>SQLite3是一个广泛使用的数据库，从linux，windows到安卓都有SQLite的应用。本文介绍SQLite3及SqlCipher在windows上的编译。
 SQLite3的编译 SQLite3提供了多种源代码的下载，下面以合并后的代码（amalgamation）和原始代码（RAW）为例说明编译过程。编译过程参考https://www.sqlite.org/howtocompile.html
 amalgamation编译方式 下载（地址）sqlite-amalgamation-3240000.zip后解压，启动visual studio的命令行工具，输入命令

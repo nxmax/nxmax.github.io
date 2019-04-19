@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Developments on Nxmax&#39;s Blog</title>
-    <link>./development/</link>
+    <link>/development/</link>
     <description>Recent content in Developments on Nxmax&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Apr 2019 13:42:04 +0800</lastBuildDate>
     
-	<atom:link href="./development/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/development/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Compile Sqlcipher on Windows</title>
-      <link>./development/compile-sqlcipher-on-windows/</link>
+      <link>/development/compile-sqlcipher-on-windows/</link>
       <pubDate>Fri, 19 Apr 2019 13:42:04 +0800</pubDate>
       
-      <guid>./development/compile-sqlcipher-on-windows/</guid>
+      <guid>/development/compile-sqlcipher-on-windows/</guid>
       <description>SQLite3是一个广泛使用的数据库，从linux，windows到安卓都有SQLite的应用。本文介绍SQLite3及SqlCipher在windows上的编译。
 SQLite3的编译 SQLite3提供了多种源代码的下载，下面以合并后的代码（amalgamation）和原始代码（RAW）为例说明编译过程。编译过程参考https://www.sqlite.org/howtocompile.html
 amalgamation编译方式 下载（地址）sqlite-amalgamation-3240000.zip后解压，启动visual studio的命令行工具，输入命令
