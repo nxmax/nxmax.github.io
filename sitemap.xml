@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/development/library/</loc>
+    <lastmod>2019-04-23T08:25:18+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/java/android-aoa/</loc>
     <lastmod>2019-04-19T15:24:23+08:00</lastmod>
   </url>
@@ -29,7 +34,7 @@
   
   <url>
     <loc>/development/</loc>
-    <lastmod>2019-04-19T13:42:04+08:00</lastmod>
+    <lastmod>2019-04-23T08:25:18+08:00</lastmod>
     <priority>0</priority>
   </url>
   

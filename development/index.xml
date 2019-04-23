@@ -6,10 +6,37 @@
     <description>Recent content in Developments on Nxmax&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Apr 2019 13:42:04 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Apr 2019 08:25:18 +0800</lastBuildDate>
     
 	<atom:link href="/development/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>静态库lib和动态dll区别及本质</title>
+      <link>/development/library/</link>
+      <pubDate>Tue, 23 Apr 2019 08:25:18 +0800</pubDate>
+      
+      <guid>/development/library/</guid>
+      <description>静态库lib和动态dll都是代码复用的方式（对于linux下的so同样适用），下面详细说明他们的来龙去脉。
+程序开发的历史 可以运行的程序是由源代码编译而成的，一个简单的程序编译过程是源文件直接编译成了可执行文件。
+应用程序功能变多后源代码也变得更多，为了好管理源代码，可以将源代码分成多模块：
+如果多个应用程序都使用到了一个公共模块，事情就变成了这样子：
+公共模板必须与最终的应用代码编译到执行文件中。当功能的模块本身比较大，且有大量的应用程序都使用时，将功能模块都编译到应用程序中就很臃肿，因此可以把公共的模块编译成动态库【so/dll】文件，让各个应用在运行的时候才加载动态库。
+动态库的引入同时也会带来问题，如动态库的多个版本问题，程序分发变的复杂。因此现实中静态连接和动态库连接两种方式使用都非常广泛。
+代码复用的真实世界 代码复用中静态库和动态库的使用原理是不一样的。
+下面是静态库的编译过程：
+静态库是由源代码编译而成，编译后的lib文件中有函数符号和对应的执行代码。代码中调用的第三方库中的函数时，编译后的lib文件只是记录需要调用的函数符号，不会把具体函数的执行代码保存到本lib文件。
+下面是动态库的编译过程：
+动态库生成过程中，如果第三方库是静态库，需要将第三方库的执行代码链接到文件中，如果第三方库是动态库，则是动态的查找dll中的函数地址。
+一个可可执行文件依赖的库相互依赖时，情况会变的复杂。
+第一种情况是多个版本的静态库
+比如LibB在开发的时候使用的是LibA的v1版本，在开发应用的时候又依赖的是LibA的v2版本，如果LibA v1版本中被libB使用的函数符合在LibA的v2版本中已经删除，那么在生成应用的时候cl会出现LNK2019 unresolved external symbol &amp;quot;&amp;quot; referenced in function的错误。
+第二种情况是在一个可执行文件中包含相同库的多个版本
+在这种情况下可执行文件是可以生成的，在App中最终引入的执行代码是LibA的V2版本，如果LibA v1/v2版本的内存管理不一致时应用的行为就不可知了。
+可以使用我github上的测试代码进行测试。
+msvcrt库的各种形式mt, mtd, md, mdd msvcrt(Microsoft C Runtime Library)微软的基础库的角色和上面说的LibA功能类似，不管是DLL还是最终的应用都要用到，基础库有多种形式，分别用于单线程/多线程，静态库/动态库。
+   中文名称 英文名称 参数 库名称 定义的符号     单线程(/ML) Single Threaded /ML LIBC (none)   多线程(/MT) Static MultiThread /MT LIBCMT _MT   多线程DLL(/MD) Dynamic Link (DLL) /MD MSVCRT _MT and _DLL   单线程调试(/MLd) Debug Single Threaded /MLd LIBCD _DEBUG   多线程调试(/MTd) Debug Static MultiThread /MTd LIBCMTD _DEBUG and _MT   多线程调试DLL(/MDd) Debug Dynamic Link (DLL) /MDd MSVCRTD _DEBUG, _MT, and _DL    其中单线程的版本在vs2003之后就废了。</description>
+    </item>
     
     <item>
       <title>Compile Sqlcipher on Windows</title>
